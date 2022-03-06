@@ -43,7 +43,7 @@ namespace StudentAPI.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StudentRegisterNumber = table.Column<string>(type: "nvarchar(75)", nullable: true),
+                    ApplicationNumber = table.Column<string>(type: "nvarchar(75)", nullable: true),
                     StudentId = table.Column<int>(type: "int", nullable: false),
                     TeachingMethod = table.Column<string>(type: "nvarchar(10)", nullable: true),
                     GrandTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
@@ -65,21 +65,20 @@ namespace StudentAPI.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ApplicationMasterId = table.Column<long>(type: "bigint", nullable: false),
+                    ApplicationMasterId = table.Column<int>(type: "int", nullable: false),
                     CourseDetailsId = table.Column<int>(type: "int", nullable: false),
                     CoursePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Frequency = table.Column<int>(type: "int", nullable: false),
-                    ApplicationMasterId1 = table.Column<int>(type: "int", nullable: true)
+                    Frequency = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ApplicationDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ApplicationDetails_ApplicationMaster_ApplicationMasterId1",
-                        column: x => x.ApplicationMasterId1,
+                        name: "FK_ApplicationDetails_ApplicationMaster_ApplicationMasterId",
+                        column: x => x.ApplicationMasterId,
                         principalTable: "ApplicationMaster",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ApplicationDetails_CourseUnits_CourseDetailsId",
                         column: x => x.CourseDetailsId,
@@ -88,10 +87,30 @@ namespace StudentAPI.DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "CourseUnits",
+                columns: new[] { "Id", "CourseCode", "CourseName", "Price" },
+                values: new object[,]
+                {
+                    { -1, "ICT001", "Foundamental Of Computing", 30000m },
+                    { -2, "ICT002", "Programming", 2000m },
+                    { -3, "ENG223", "English Language", 1500m }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Students",
+                columns: new[] { "Id", "Address", "DateOfBirth", "StudentName" },
+                values: new object[,]
+                {
+                    { -1, "Kampala", new DateTime(1990, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Jone Daniel" },
+                    { -2, "Kampala", new DateTime(1998, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Jules Willis" },
+                    { -3, "Kampala", new DateTime(2000, 11, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), "Victoria Elisabeth" }
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_ApplicationDetails_ApplicationMasterId1",
+                name: "IX_ApplicationDetails_ApplicationMasterId",
                 table: "ApplicationDetails",
-                column: "ApplicationMasterId1");
+                column: "ApplicationMasterId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ApplicationDetails_CourseDetailsId",

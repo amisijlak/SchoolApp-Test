@@ -92,6 +92,29 @@ namespace StudentAPI.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CourseUnits");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            CourseCode = "ICT001",
+                            CourseName = "Foundamental Of Computing",
+                            Price = 30000m
+                        },
+                        new
+                        {
+                            Id = -2,
+                            CourseCode = "ICT002",
+                            CourseName = "Programming",
+                            Price = 2000m
+                        },
+                        new
+                        {
+                            Id = -3,
+                            CourseCode = "ENG223",
+                            CourseName = "English Language",
+                            Price = 1500m
+                        });
                 });
 
             modelBuilder.Entity("StudentAPI.DAL.Models.Student", b =>
@@ -113,6 +136,29 @@ namespace StudentAPI.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Students");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Address = "Kampala",
+                            DateOfBirth = new DateTime(1990, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StudentName = "Jone Daniel"
+                        },
+                        new
+                        {
+                            Id = -2,
+                            Address = "Kampala",
+                            DateOfBirth = new DateTime(1998, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StudentName = "Jules Willis"
+                        },
+                        new
+                        {
+                            Id = -3,
+                            Address = "Kampala",
+                            DateOfBirth = new DateTime(2000, 11, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StudentName = "Victoria Elisabeth"
+                        });
                 });
 
             modelBuilder.Entity("StudentAPI.DAL.Models.ApplicationDetail", b =>
